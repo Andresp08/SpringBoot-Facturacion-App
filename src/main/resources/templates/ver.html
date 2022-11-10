@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container mt-5 mb-5">
+		<div class="row mt-5">
+			<div class="col mt35">
+
+				<a class="mb-3 btn btn-outline-warning" th:text="'Volver'" 
+					th:href="@{/listar}"></a>
+
+				<div class="card">
+					<div class="card-header">
+						<h2 th:text="${titulo}" class="card-title">Titulo</h2>
+					</div>
+					<div class="card-body">
+					
+						<img th:if="${cliente.foto != null}" 
+							class="img-fluid img-thumbnail rounded float-left"
+							style="max-width: 25%" th:src="@{'/uploads/' + ${cliente.foto}}"
+							th:alt="${cliente.foto}" />
+
+						<ul class="list-group">
+							<li class="list-group-item" th:text="${cliente.nombre}"></li>
+							<li class="list-group-item" th:text="${cliente.apellido}"></li>
+							<li class="list-group-item" th:text="${cliente.email}"></li>
+							<li class="list-group-item" th:text="${cliente.createdAt}"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer" class="mt-5"></footer>
+</body>
+</html>

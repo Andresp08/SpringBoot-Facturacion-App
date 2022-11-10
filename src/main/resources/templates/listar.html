@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container-fluid">
+		<h1 th:text="${titulo}" class="text-center mt-5 mb-5">title</h1>
+
+		<div class="container-fluid row justify-content-end">
+			<a th:href="@{/form}" class="text-end btn btn-secondary mb-5">Crear
+				Nuevo</a>
+		</div>
+		
+		<p th:if="${clientes.isEmpty()}" th:text="'No hay datos para mostrar'"></p>
+
+		<div class="row d-flex justify-content-center">
+			<div class="col-12 mx-auto">
+				<table th:if="${!clientes.isEmpty()}" 
+					class="table table-striped text-center table-bordered">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Email</th>
+							<th>Fecha Creación</th>
+							<th>Editar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cliente : ${clientes}">
+							<td>
+								<a class="btn btn-info" th:href="@{/ver/} + ${cliente.id}" 
+								th:text="${cliente.id}"></a>
+							</td>
+							<td th:text="${cliente.nombre}">Nombre</td>
+							<td th:text="${cliente.apellido}">Apellido</td>
+							<td th:text="${cliente.email}">Email</td>
+							<td th:text="${cliente.createdAt}">Fecha</td>
+							<td> 
+								<a class="btn btn-outline-warning" 
+									th:href="@{/form/} + ${cliente.id}">
+									Editar
+								</a>
+							</td>
+							<td> 
+								<a class="btn btn-outline-danger" 
+									th:href="@{/eliminar/} + ${cliente.id}"
+									th:text="'eliminar'"onclick="return confirm('Delete entry?')"
+									>
+									Eliminar
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<nav th:replace="paginator-nav :: paginator"></nav>
+				
+			</div>
+		</div>
+		<!-- row -->
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
