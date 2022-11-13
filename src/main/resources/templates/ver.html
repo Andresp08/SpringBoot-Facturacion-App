@@ -8,7 +8,7 @@
 		<div class="row mt-5">
 			<div class="col mt35">
 
-				<a class="mb-3 btn btn-outline-warning" th:text="'Volver'" 
+				<a class="mb-3 btn btn-outline-warning" th:text="'Volver'"
 					th:href="@{/listar}"></a>
 
 				<div class="card">
@@ -16,8 +16,8 @@
 						<h2 th:text="${titulo}" class="card-title">Titulo</h2>
 					</div>
 					<div class="card-body">
-					
-						<img th:if="${cliente.foto != null}" 
+
+						<img th:if="${cliente.foto != null}"
 							class="img-fluid img-thumbnail rounded float-left"
 							style="max-width: 25%" th:src="@{'/uploads/' + ${cliente.foto}}"
 							th:alt="${cliente.foto}" />
@@ -28,6 +28,34 @@
 							<li class="list-group-item" th:text="${cliente.email}"></li>
 							<li class="list-group-item" th:text="${cliente.createdAt}"></li>
 						</ul>
+
+
+						<!-- mostrar mensaje si está vacia -->
+						<p th:if="${#lists.isEmpty(cliente.facturas)}"
+							class="alert alert-info m-4"
+							th:text="'No hay facturas asignadas para 
+							el cliente ' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></p>
+
+						<table th:if="${not #lists.isEmpty(cliente.facturas)}"
+							class="table table-bordered table-striped my-4">
+							<thead class="thead-dark">
+								<tr>
+									<th>Folio</th>
+									<th>Descripcion</th>
+									<th>Fecha</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="factura : ${cliente.facturas}">
+									<td th:text="${factura.id}"></td>
+									<td th:text="${factura.descripcion}"></td>
+									<td th:text="${factura.createdAt}"></td>
+									<td th:text="${factura.totalFactura}"></td>
+								</tr>
+							</tbody>
+						</table>
+
 					</div>
 				</div>
 			</div>
