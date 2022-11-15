@@ -26,6 +26,7 @@
 							<th>Apellido</th>
 							<th>Email</th>
 							<th>Fecha Creación</th>
+							<th>Crear Factura</th>
 							<th>Editar</th>
 							<th>Eliminar</th>
 						</tr>
@@ -40,6 +41,12 @@
 							<td th:text="${cliente.apellido}">Apellido</td>
 							<td th:text="${cliente.email}">Email</td>
 							<td th:text="${cliente.createdAt}">Fecha</td>
+							<td>
+								<a class="btn btn-outline-success" 
+									th:href="@{'/factura/form/' + ${cliente.id}}"
+									th:text="'Crear Factura'">
+								</a>
+							</td>
 							<td> 
 								<a class="btn btn-outline-warning" 
 									th:href="@{/form/} + ${cliente.id}">
@@ -49,7 +56,7 @@
 							<td> 
 								<a class="btn btn-outline-danger" 
 									th:href="@{/eliminar/} + ${cliente.id}"
-									th:text="'eliminar'"onclick="return confirm('Delete entry?')"
+									th:text="'Eliminar'"onclick="return confirm('Delete entry?')"
 									>
 									Eliminar
 								</a>

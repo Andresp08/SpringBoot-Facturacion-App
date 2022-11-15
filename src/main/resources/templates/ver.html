@@ -8,13 +8,22 @@
 		<div class="row mt-5">
 			<div class="col mt35">
 
-				<a class="mb-3 btn btn-outline-warning" th:text="'Volver'"
+				<a class="mb-3 btn btn-warning" th:text="'&laquo; volver'"
 					th:href="@{/listar}"></a>
 
+
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header d-flex justify-content-between">
 						<h2 th:text="${titulo}" class="card-title">Titulo</h2>
+
+						<div>
+							<a class="btn btn-success"
+								th:href="@{'/factura/form/' + ${cliente.id}}"
+								th:text="'Crear Factura'"> </a>
+						</div>
+
 					</div>
+
 					<div class="card-body">
 
 						<img th:if="${cliente.foto != null}"

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container mt-5">
+
+		<a class="mb-3 btn btn-warning" th:text="'&laquo; volver'"
+			th:href="@{'/ver/' + ${factura.cliente.id}}"></a>
+
+		<h1 th:text="${titulo}" class="text-center mt-2 mb-5">title</h1>
+
+
+		<div class="col-6 mx-auto mt-5 mb-5">
+			<form class="" action="@{/factura/form/}" th:object="${factura}"
+				method="POST">
+
+				<div class="form-group">
+					<label for="cliente">Cliente</label> <input id="cliente"
+						class="form-control "
+						th:value="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"
+						disabled='disabled' />
+				</div>
+
+				<div class="form-group">
+					<label for="descripcion">Descripción</label> <input type="text"
+						class="form-control" id="descripcion" th:field="*{descripcion}"
+						th:value="${descripcion}" />
+					<!--<small class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{nombre}"></small>-->
+				</div>
+
+				<div class="form-group">
+					<label for="observacion">Observación</label>
+					<textarea id="observacion" th:field="*{observacion}"
+						th:value="${observacion}" class="form-control"></textarea>
+					<!--<small class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{nombre}"></small>-->
+				</div>
+
+				<div class="form-group">
+					<label for="buscar_producto">Buscar Producto</label> 
+					<input type="text" class="form-control" name="buscar_producto" id="buscar_producto"/>
+				</div>
+
+				<input type="submit" th:value="${titulo}"
+					class="btn btn-primary btn-block py-2"></input>
+			</form>
+		</div>
+		<!-- col -->
+
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+	<script th:replace="factura/js/autocomplete-productos :: javascript"></script>
+
+</body>
+</html>
