@@ -13,7 +13,7 @@
 
 
 		<div class="col-8 mx-auto mt-5 mb-5">
-			<form class="" action="@{/factura/form/}" th:object="${factura}"
+			<form class="" th:action="@{/factura/form/}" th:object="${factura}"
 				method="POST">
 
 				<div class="form-group">
@@ -26,8 +26,9 @@
 				<div class="form-group">
 					<label for="descripcion">Descripción</label> <input type="text"
 						class="form-control" id="descripcion" th:field="*{descripcion}"
-						th:value="${descripcion}" />
-					<!--<small class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{nombre}"></small>-->
+						th:value="${descripcion}" th:errorclass="'form-control is-invalid'"/>
+					<small class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" 
+						th:errors="*{descripcion}"></small>
 				</div>
 
 				<div class="form-group">
