@@ -54,6 +54,7 @@
 									<th>Fecha</th>
 									<th>Total</th>
 									<th>Ver</th>
+									<th>Eliminar</th>	
 								</tr>
 							</thead>
 							<tbody>
@@ -66,6 +67,13 @@
 										<a class="btn btn-primary" 
 											th:href="@{'/factura/ver/' + ${factura.id}}"
 											th:text="'Detalle factura'">
+										</a>
+									</td>
+									<td>
+										<a class="btn btn-danger" 
+											th:href="@{'/factura/eliminar/' + ${factura.id}}"
+											th:text="'Eliminar'" 
+											onclick="return confirm('¿Estas seguro que desea eliminar la factura?');">
 										</a>
 									</td>
 								</tr>

@@ -3,29 +3,34 @@
 <head th:replace="layout/layout :: head"></head>
 <body>
 	<header th:replace="layout/layout :: header"></header>
-	
+
 	<div class="container mt-5 mb-5">
-		<a class="mb-3 btn btn-warning" th:text="'&laquo; volver'" 
-		th:href="@{'/ver/' + ${factura.cliente.id}}"></a>
+		<a class="mb-3 btn btn-warning" th:text="'&laquo; volver'"
+			th:href="@{'/ver/' + ${factura.cliente.id}}"></a>
 
 		<h1 th:text="${titulo}" class="text-center mt-2 mb-5">title</h1>
-		
+
 		<ul class="list-group my-2">
-			<li class="list-group-item list-group-item-primary" th:text="'Datos del cliente'"></li>
+			<li class="list-group-item list-group-item-primary"
+				th:text="'Datos del cliente'"></li>
 			<li class="list-group-item" th:text="${factura.cliente}"></li>
 			<li class="list-group-item" th:text="${factura.cliente.email}"></li>
 		</ul>
-		
+
 		<ul class="list-group my-2">
-			<li class="list-group-item list-group-item-success" th:text="'Datos de la factura'"></li>
+			<li class="list-group-item list-group-item-success"
+				th:text="'Datos de la factura'"></li>
 			<li class="list-group-item" th:text="'Folio: ' + ${factura.id}"></li>
-			<li class="list-group-item" th:text="'Descripción: ' + ${factura.descripcion}"></li>
-			<li class="list-group-item" th:text="'Fecha: ' + ${factura.createdAt}"></li>
+			<li class="list-group-item"
+				th:text="'Descripción: ' + ${factura.descripcion}"></li>
+			<li class="list-group-item"
+				th:text="'Fecha: ' + ${factura.createdAt}"></li>
 		</ul>
-		
-		<div class="alert alert-info my-2" th:if="${#lists.isEmpty(factura.items)}" 
+
+		<div class="alert alert-info my-2"
+			th:if="${#lists.isEmpty(factura.items)}"
 			th:text="'No hay lineas para la factura: ' + ${factura.descripcion}"></div>
-		
+
 		<table class="table table-striped table-hover table-bordered my-2"
 			th:if="${not #lists.isEmpty(factura.items)}">
 			<thead>
@@ -41,23 +46,35 @@
 					<td th:text="${linea.producto.nombre}"></td>
 					<td th:text="${linea.producto.precio}"></td>
 					<td th:text="${linea.cantidad}"></td>
-					<td th:text="${linea.calcularImporte()}"></td>		
+					<td th:text="${linea.calcularImporte()}"></td>
 				</tr>
 			</tbody>
-		
+
 		</table>
-		
+
 		<div class="d-flex justify-content-end">
-		<h5 class="mb-1">
-			Gran Total: 
-			<span class="badge badge-secondary" th:text="${factura.totalFactura}"></span>
-		</h5>
+			<h5 class="mb-1">
+				Gran Total: <span class="badge badge-secondary"
+					th:text="${factura.totalFactura}"></span>
+			</h5>
 		</div>
 		
-		
-		
+		<div class="card border-info mb-4 mt-4">
+			<div class="card-header">
+				<h3>Observaciones</h3>	
+			</div>
+			<div class="card-body">
+				<p class="card-text" th:text="${factura.observacion}" 
+					th:if="${not #strings.isEmpty(factura.observacion)}"></p>
+				<p class="card-text" th:if="${#strings.isEmpty(factura.observacion)}"
+					th:text="'No tiene observaciones!!'"></p>
+			</div>
+		</div>
+
+
+
 	</div>
-	
+
 	<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>
