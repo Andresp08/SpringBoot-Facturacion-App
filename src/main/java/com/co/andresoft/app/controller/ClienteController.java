@@ -66,7 +66,8 @@ public class ClienteController {
 	@GetMapping("ver/{id}")
 	public String verImagen(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
-		Cliente cliente = clienteService.findOne(id);
+		//Cliente cliente = clienteService.findOne(id);
+		Cliente cliente = clienteService.findClienteByIdWithFacturas(id);
 
 		if (cliente == null) {
 			flash.addFlashAttribute("error", "El cliente no existe en la BBDD!!");
