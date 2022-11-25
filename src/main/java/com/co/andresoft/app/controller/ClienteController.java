@@ -42,11 +42,6 @@ public class ClienteController {
 	@Autowired
 	private IUploadFileService uploadFileService;
 
-	@GetMapping({ "", "/", "/index" })
-	public String index() {
-		return "forward:/listar";
-	}
-
 	@GetMapping("/uploads/{filename:.+}") // para que no se trunque la extensión de la imagen
 	public ResponseEntity<Resource> verImagen(@PathVariable String filename) {
 
@@ -80,7 +75,7 @@ public class ClienteController {
 		return "ver";
 	}
 
-	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	@RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
 		Pageable pageRequest = PageRequest.of(page, 4); // 4 registros por pagina
