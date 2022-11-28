@@ -1,4 +1,4 @@
-package com.co.andresoft.app.dao;
+package com.co.andresoft.app.models.dao;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

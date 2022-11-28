@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import com.co.andresoft.app.models.entity.ItemFactura;
 import com.co.andresoft.app.models.entity.Producto;
 import com.co.andresoft.app.models.service.IClienteService;
 
+@Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping(value = "/factura")
 @SessionAttributes("factura")
@@ -52,6 +54,8 @@ public class FacturaController {
 
 		return "factura/ver";
 	}
+	
+	
 
 	@GetMapping("/form/{clienteId}")
 	public String crear(@PathVariable(value = "clienteId") Long clienteId, Model model, RedirectAttributes flash) {
@@ -72,12 +76,16 @@ public class FacturaController {
 		return "factura/form";
 	}
 
+	
+	
 	@GetMapping(value = "/cargar-productos/{term}", produces = { "application/json" })
 	public @ResponseBody List<Producto> cargarProductos(@PathVariable String term) {
 		return clienteService.findProductByName(term);
 		/* ResponseBody transforma la salida en JSON, la guarda dentro del response */
 	}
 
+	
+	
 	@PostMapping("/form")
 	public String guardar(@Valid Factura factura, BindingResult result, Model model,
 			@RequestParam(name = "item_id[]", required = false) Long[] itemId,
@@ -115,6 +123,8 @@ public class FacturaController {
 		return "redirect:/ver/" + factura.getCliente().getId();
 	}
 
+	
+	
 	@GetMapping("/eliminar/{id}")
 	public String eliminarFactura(@PathVariable Long id, RedirectAttributes flash) {
 		

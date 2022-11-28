@@ -3,16 +3,25 @@ package com.co.andresoft.app.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import org.springframework.http.HttpHeaders;
+
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +44,8 @@ import com.co.andresoft.app.util.paginator.PageRender;
 @Controller
 @SessionAttributes("cliente") // alternativa al input hidden
 public class ClienteController {
+	
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	private IClienteService clienteService;
@@ -42,6 +53,7 @@ public class ClienteController {
 	@Autowired
 	private IUploadFileService uploadFileService;
 
+	@Secured("ROLE_USER")
 	@GetMapping("/uploads/{filename:.+}") // para que no se trunque la extensión de la imagen
 	public ResponseEntity<Resource> verImagen(@PathVariable String filename) {
 
@@ -58,6 +70,8 @@ public class ClienteController {
 				.body(recurso);
 	}
 
+	
+	@Secured("ROLE_USER")
 	@GetMapping("ver/{id}")
 	public String verImagen(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
@@ -75,8 +89,20 @@ public class ClienteController {
 		return "ver";
 	}
 
+	
 	@RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
-	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
+			Authentication authentication) {
+		
+		if(authentication != null) {
+			logger.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
+		}
+		
+		/*if(hasRole("ROLE_ADMIN")) {
+			logger.info("Hola " .concat(authentication.getName()).concat(" tienes acceso"));
+		} else {
+			logger.info("Hola " .concat(authentication.getName()).concat(" NO tienes acceso"));
+		}*/
 
 		Pageable pageRequest = PageRequest.of(page, 4); // 4 registros por pagina
 
@@ -91,6 +117,7 @@ public class ClienteController {
 		return "listar";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String crear(Map<String, Object> model) {
 		model.put("titulo", "Formulario de Clientes");
@@ -100,8 +127,9 @@ public class ClienteController {
 
 		return "form";
 	}
+	
 
-	// edit client
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/form/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
@@ -122,6 +150,8 @@ public class ClienteController {
 		return "form";
 	}
 
+	
+	@Secured("ROLE_ADMIN")
 	@PostMapping("/form")
 	public String guardar(@Valid Cliente cliente, BindingResult result, Model model,
 			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
@@ -160,6 +190,8 @@ public class ClienteController {
 		return "redirect:listar";
 	}
 
+	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
@@ -175,5 +207,32 @@ public class ClienteController {
 		}
 		return "redirect:/listar";
 	}
+	
+	private boolean hasRole(String role) {
+		
+		SecurityContext context = SecurityContextHolder.getContext();
+		
+		if(context == null) {
+			return false; //no tiene acceso
+		}
+		
+		Authentication auth = context.getAuthentication();
+		
+		if(auth == null) {
+			return false;
+		}
+		
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		
+		for(GrantedAuthority authority: authorities) {
+			if(role.equals(authority.getAuthority())) {
+				logger.info("Hola usuario " .concat(auth.getName()).concat(" tu roles es: " .concat(authority.getAuthority())));
+				return true; //tiene permiso
+			}
+		}
+		
+		return false; //no tiene acceso
+	}
+	
 
 }

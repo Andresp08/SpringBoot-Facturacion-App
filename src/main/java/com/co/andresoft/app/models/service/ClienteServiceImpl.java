@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.co.andresoft.app.dao.IClienteDao;
-import com.co.andresoft.app.dao.IFacturaDao;
-import com.co.andresoft.app.dao.IProductoDao;
+import com.co.andresoft.app.models.dao.IClienteDao;
+import com.co.andresoft.app.models.dao.IFacturaDao;
+import com.co.andresoft.app.models.dao.IProductoDao;
 import com.co.andresoft.app.models.entity.Cliente;
 import com.co.andresoft.app.models.entity.Factura;
 import com.co.andresoft.app.models.entity.Producto;
