@@ -12,7 +12,11 @@
 			<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/form}" 
 				class="text-end btn btn-secondary mb-5">CrearNuevo
 			</a>
+			
+			<a class="btn btn-success float-right ml-2 mb-5" 
+			th:href="@{'/listar'(format=csv)}">CSV</a>
 		</div>
+		
 		
 		<p th:if="${clientes.isEmpty()}" th:text="'No hay datos para mostrar'"></p>
 
