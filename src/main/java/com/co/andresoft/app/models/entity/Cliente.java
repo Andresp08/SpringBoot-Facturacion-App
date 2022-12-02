@@ -22,6 +22,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable {
@@ -44,11 +47,13 @@ public class Cliente implements Serializable {
 	@Column(name = "created_at")
 	@Temporal(TemporalType.DATE) // formato en que se va a guardar
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createdAt;
 
 	/* Un cliente puede tener muchas facturas */
 	/*mapeado por = hace que sea bidireccional con la clase Factura*/
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL) 
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference //Parte a mostrar en el JsON
 	private List<Factura> facturas;
 
 	public Cliente() {
