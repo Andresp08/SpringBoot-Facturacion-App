@@ -18,6 +18,9 @@
 ⋅ Best practices and folder structure \
 ⋅ Fields validation and more \
 
+#### Sign in: User: admin - password: password
+#### Sign in: User: andresp - password: password
+
 
 ## Home page
 ![login](https://user-images.githubusercontent.com/45151760/207644341-620846fb-9716-48a6-b430-aebb6ef1bf98.png)
