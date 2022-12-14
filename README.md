@@ -11,6 +11,7 @@
 . File upload services for cliente images \
 . Thymeleaf template engine with Bootstrap 5\
 ⋅ MySQL as Database Service and JPA \
+⋅ Spring Security \
 ⋅ Pagination \
 ⋅ Reports in PDF, CSV, XML and many more formats  \
 ⋅ Multilingual interface, English, Spanish and German. \
