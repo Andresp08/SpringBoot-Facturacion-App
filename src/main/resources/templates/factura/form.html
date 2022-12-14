@@ -4,7 +4,7 @@
 <body>
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container mt-5">
+	<div class="container mt-5 mb-5">
 
 		<a class="mb-3 btn btn-warning" th:text="'&laquo; volver'"
 			th:href="@{'/ver/' + ${factura.cliente.id}}"></a>
@@ -71,7 +71,7 @@
 
 	</div>
 
-	<footer th:replace="layout/layout :: footer"></footer>
+	<footer th:replace="layout/layout :: footer" class="mt-5"></footer>
 	<script th:replace="factura/js/autocomplete-productos :: javascript"></script>
 
 </body>
