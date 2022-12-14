@@ -19,7 +19,7 @@
 ⋅ Fields validation and more \
 
 #### Sign in: User: admin - password: password
-#### Sign in: User: andresp - password: password
+#### Sign in: User: andres - password: password
 
 
 ## Home page
